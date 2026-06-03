@@ -1,0 +1,54 @@
+import xapi from 'xapi';
+
+/**
+ * Macro: Gestione Input Testuale
+ * Data: 2026-06-03
+ * Località: Almere, NL
+ */
+
+/**
+ * Funzione per visualizzare il prompt di input testuale
+ */
+async function showOsdInputAccesso() {
+    try {
+        // Risveglia il dispositivo se in standby
+        await xapi.Command.Standby.Deactivate();
+
+        // Visualizza il prompt di input testuale
+        await xapi.Command.UserInterface.Message.TextInput.Display({
+            Duration: 60,              // Durata in secondi
+            FeedbackId: "input_access", // ID univoco per identificare la risposta
+            InputType: "SingleLine",    // 'SingleLine', 'Password' o 'Numeric'
+            KeyboardState: "Open",      // 'Open' o 'Closed'
+            Placeholder: "Inserisci codice...",
+            SubmitText: "Invia",
+            Text: "Inserisci il codice di accesso per continuare",
+            Title: "ACCESSO RISERVATO"
+        });
+        
+        console.log("Prompt di input testuale visualizzato.");
+    } catch (e) {
+        console.error("Errore durante la visualizzazione del prompt: " + e.message);
+    }
+}
+
+/**
+ * Listener per catturare la risposta dell'utente
+ */
+xapi.Event.UserInterface.Message.TextInput.Response.on((event) => {
+    // Verifichiamo se la risposta appartiene al nostro prompt tramite il FeedbackId
+    if (event.FeedbackId === "input_access") {
+        console.log("Testo inserito dall'utente:", event.Text);
+        
+        // Esempio di logica: verifica del codice
+        if (event.Text === "1234") {
+            console.log("Codice corretto, accesso autorizzato.");
+            // Aggiungi qui le azioni da eseguire
+        } else {
+            console.warn("Codice errato.");
+        }
+    }
+});
+
+// Esempio di chiamata:
+// showOsdInputAccesso();
