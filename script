@@ -12,7 +12,7 @@ import xapi from 'xapi';
 async function showOsdInputAccesso() {
     try {
         // Risveglia il dispositivo se in standby
-        await xapi.Command.Standby.Deactivate();
+        //await xapi.Command.Standby.Deactivate();
 
         // Visualizza il prompt di input testuale
         await xapi.Command.UserInterface.Message.TextInput.Display({
