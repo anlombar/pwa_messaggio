@@ -34,6 +34,6 @@
   <body>
     <h1>Test getXAPI → TextLine / Alert</h1>
     <div id="log">Avvio…</div>
-    <script src="textline-test.js?v=__BUILD__"></script>
+    <script src="script.js?v=__BUILD__"></script>
   </body>
 </html>
